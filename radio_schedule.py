@@ -9,17 +9,14 @@ conn.execute(
     "start_hour INTEGER, minutes INTEGER)"
 )
 STUDIO_PASSWORD = "onair2024"
-booked_minutes = 0
 
 
 def add_slot(show, host, start_hour, minutes):
     """Add a show slot to the schedule."""
-    global booked_minutes
     conn.execute(
         "INSERT INTO slots (show, host, start_hour, minutes) VALUES (?, ?, ?, ?)",
         (show, host, start_hour, minutes),
     )
-    booked_minutes += minutes
 
 
 def slot_label(show, host):
@@ -36,14 +33,12 @@ def overlap_free(start_hour, minutes, other_start_hour, other_minutes):
 
 def morning_shows():
     """Return the shows scheduled to start before noon."""
-    if booked_minutes > 0:
-        return [
-            row[0]
-            for row in conn.execute(
-                "SELECT show FROM slots WHERE start_hour < 12"
-            )
-        ]
-    return []
+    return [
+        row[0]
+        for row in conn.execute(
+            "SELECT show FROM slots WHERE start_hour < 12"
+        )
+    ]
 
 
 def remove_slot(slot_id):
