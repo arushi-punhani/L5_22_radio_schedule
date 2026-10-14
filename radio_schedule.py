@@ -8,7 +8,10 @@ booked_minutes = 0
 
 def addSlot(show, host, start_hour, minutes):
     global booked_minutes
-    conn.execute("INSERT INTO slots (show, host, start_hour, minutes) VALUES ('%s', '%s', %d, %d)" % (show, host, start_hour, minutes))
+    conn.execute(
+        "INSERT INTO slots (show, host, start_hour, minutes) VALUES (?, ?, ?, ?)",
+        (show, host, start_hour, minutes),
+    )
     booked_minutes += minutes
 
 
