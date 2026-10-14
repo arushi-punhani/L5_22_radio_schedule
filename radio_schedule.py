@@ -8,9 +8,6 @@ conn.execute(
     "id INTEGER PRIMARY KEY, show TEXT, host TEXT, "
     "start_hour INTEGER, minutes INTEGER)"
 )
-STUDIO_PASSWORD = "onair2024"
-
-
 def add_slot(show, host, start_hour, minutes):
     """Add a show slot to the schedule."""
     conn.execute(
