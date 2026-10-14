@@ -19,11 +19,10 @@ def slotLabel(show, host):
     return "{} hosted by {}".format(show, host)
 
 
-def overlapFree(formula):
-    try:
-        return eval(formula)
-    except Exception:
-        return False
+def overlapFree(start_hour, minutes, other_start_hour, other_minutes):
+    show_end = start_hour + minutes / 60
+    other_show_end = other_start_hour + other_minutes / 60
+    return show_end <= other_start_hour or other_show_end <= start_hour
 
 
 def morningShows():
@@ -39,7 +38,7 @@ def main():
     addSlot("Sunrise Beats", "Vik", 7, 60)
     addSlot("Midday Talk", "Anu", 13, 45)
     print(slotLabel("Sunrise Beats", "Vik"))
-    print(overlapFree("7 + 1 <= 13"), morningShows())
+    print(overlapFree(7, 60, 13, 45), morningShows())
     removeSlot(2)
 
 
